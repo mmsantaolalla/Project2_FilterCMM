@@ -9,15 +9,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class InsertTabla {
-	public static void insertElement (Integer compound_id, int numC, int numN, int numCl, int numO, int numH, int numP, int numS ){
+	public static void insertElement (Integer compound_id, int numC, int numN, int numCl, int numO, int numH, int numP, int numS, String form ){
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
-		Statement stm = null;
-		ResultSet infoFormulas = null;
+		//Statement stm = null;
+		//ResultSet infoFormulas = null;
 		
 		try {
 				cn = conexion.conect();
-				String stmt = "INSERT INTO compound_elements (compound_id, C,N,Cl,O,H,P,S) " + "VALUES (?,?,?,?,?,?,?,?)";
+				String stmt = "INSERT INTO compound_elements (compound_id,C,N,Cl,O,H,P,S,formula) " + "VALUES (?,?,?,?,?,?,?,?,?)";
 				PreparedStatement prep = cn.prepareStatement(stmt);
 				prep.setInt(1, compound_id);
 				prep.setInt(2, numC);
@@ -27,6 +27,7 @@ public class InsertTabla {
 				prep.setInt(6, numH);
 				prep.setInt(7, numP);
 				prep.setInt(8, numS);
+				prep.setString(9, form);
 		
 				prep.executeUpdate();
 				prep.close();
@@ -39,12 +40,12 @@ public class InsertTabla {
 
 			finally { //cerramos todo
 			try {
-				if (infoFormulas!=null) {
+				/*if (infoFormulas!=null) {
 					infoFormulas.close();
 				} 
 				if(stm!=null) {
 					stm.close();
-				}
+				}*/
 				if(cn!=null) {
 					cn.close();
 				}

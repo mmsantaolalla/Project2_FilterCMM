@@ -4,16 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-
-public class Testconecction {
-	public static Map<String, Set<Integer>> conectionStatement (){
-		//ArrayList <String>formulas = new ArrayList<String>();
+public class UserSerching {
+	public static Map<String, Set<Integer>> searchingElement(String compound,int min, int max){
 		Map<String, Set<Integer>> formulas = new HashMap();
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
@@ -23,29 +20,31 @@ public class Testconecction {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
-			infoFormulas= stm.executeQuery("SELECT formula, compound_id FROM compounds WHERE formula is not null ORDER BY compound_id LIMIT 152948,20");
+			//for(int i=0; i<=rangeElement.length; i++)
+			//{
+			//	int num = rangeElement[i];
+			
+				infoFormulas= stm.executeQuery("SELECT * FROM compound_elements WHERE" +compound+ "BETWEEN " + min+ "AND" + max);
+			//}
+			
 			while(infoFormulas.next())
 			{
 
 				String formula = infoFormulas.getString("formula");
 				int compound_id = infoFormulas.getInt("compound_id");
-				boolean formulaValida = Filter.isCorrectFormula(formula);
-				if(formulaValida){
-
-					if(formulas.containsKey(formula))
-					{
-						Set<Integer> compound_ids_from_formula = formulas.get(formula);
-						compound_ids_from_formula.add(compound_id);
-					}
-					else {
-						Set compound_ids = new TreeSet<Integer>();
-						compound_ids.add(compound_id);
-						formulas.put(formula, compound_ids);
-
-					}
+				if(formulas.containsKey(formula))
+				{
+					Set<Integer> compound_ids_from_formula = formulas.get(formula);
+					compound_ids_from_formula.add(compound_id);
 				}
-				//System.out.println(formula);
+				else {
+					Set compound_ids = new TreeSet<Integer>();
+					compound_ids.add(compound_id);
+					formulas.put(formula, compound_ids);
+				}
 			}
+				//System.out.println(formula);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

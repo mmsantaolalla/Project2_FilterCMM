@@ -198,7 +198,7 @@ public class Filter {
 			Set<Integer> compound_ids = mapFormulasCompoundIds.get(formula);
 			for(Integer compound_id : compound_ids)
 			{
-				InsertTabla.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS);
+				InsertTabla.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS,formula);
 			}
 		}
 	}
