@@ -12,9 +12,9 @@ public class Conexion {
 	private static final String user = "root";
 	private static final String password = "1234";
 			
-	static {//para que no cargue el controlador cada vez, lo ponemos fuera
+	static { //so that it doesn't load the controller every time, we put it outside
 		try {
-			Class.forName(controller); //para el gestor de bases de datos mysql, se usa esta cadena
+			Class.forName(controller); //for mysql database manager, use this string
 		
 		} catch (Exception e) {
 			System.out.println("Error loading the driver");
@@ -22,24 +22,21 @@ public class Conexion {
 		}
 	}
 	public Connection conect () {
-		Connection link = null; //ya que getConnection devuelve un elemento de tipo connection
+		Connection link = null;  //since getConnection returns an element of type connection
 		try {
-			link = DriverManager.getConnection(url,user,password); //clase ya existente en java, para establecer la conexion, necesita 3 strings
-			//primer parametro: una cadena de conexion: jdbc: nombre del gestor de la base de datos: ip del servidor : puerto (3306 por defecto) : nombre base de datos
-			//segundo y tercer parametro: usuario y contraseña
+			link = DriverManager.getConnection(url,user,password); //class already existing in java, to establish the connection, you need 3 strings
+			//first parameter: a connection string: jdbc: name of the database manager: server ip: port (3306 by default): database name
+			//second and third parameters: username and password
 			
-			System.out.println("Connected"); 
+			System.out.println("\n*Connected to the data base*"); 
 			
 		
-		}catch(SQLException e) { //excepción necesaria la clase DriverManager..
+		}catch(SQLException e) { //required exception the DriverManager class ...
 			System.out.println("Error in the connection");
 			e.printStackTrace();
 		}
 		
 		return link;
 	}
-	
-	//public void
-	
 
 }

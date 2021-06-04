@@ -8,12 +8,10 @@ import java.sql.Statement;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class InsertTabla {
+public class InsertTable {
 	public static void insertElement (Integer compound_id, int numC, int numN, int numCl, int numO, int numH, int numP, int numS, String form ){
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
-		//Statement stm = null;
-		//ResultSet infoFormulas = null;
 		
 		try {
 				cn = conexion.conect();
@@ -38,14 +36,9 @@ public class InsertTabla {
 			e.printStackTrace();
 		}
 
-			finally { //cerramos todo
+			finally { //close
 			try {
-				/*if (infoFormulas!=null) {
-					infoFormulas.close();
-				} 
-				if(stm!=null) {
-					stm.close();
-				}*/
+				
 				if(cn!=null) {
 					cn.close();
 				}

@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class UserSerching {
-	public static Map<String, Set<Integer>> searchingElement(String compound,int min, int max){
+	public static Map<String, Set<Integer>> searchingElement(int Cmin, int Cmax, int Nmin, int Nmax, int Clmin, int Clmax, int Omin, int Omax, int Hmin, int Hmax, int Pmin, int Pmax, int Smin, int Smax){
 		Map<String, Set<Integer>> formulas = new HashMap();
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
@@ -20,17 +20,11 @@ public class UserSerching {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
-			//for(int i=0; i<=rangeElement.length; i++)
-			//{
-			//	int num = rangeElement[i];
-			
-				infoFormulas= stm.executeQuery("SELECT * FROM compound_elements WHERE" +compound+ "BETWEEN " + min+ "AND" + max);
-			//}
+			infoFormulas= stm.executeQuery("SELECT compound_id,formula FROM compound_elements WHERE (C BETWEEN " + Cmin+ " AND " + Cmax+ ") AND (N BETWEEN " +Nmin+ " AND " + Nmax+ ") AND (Cl BETWEEN " +Clmin+ " AND " +Clmax+ ") AND (O BETWEEN " +Omin+ " AND " +Omax+ ") AND (H BETWEEN " +Hmin+ " AND " +Hmax+ ") AND (P BETWEEN " +Pmin+ " AND " +Pmax+ ") AND (S BETWEEN " +Smin+ " AND " +Smax+ ")");
 			
 			while(infoFormulas.next())
 			{
-
-				String formula = infoFormulas.getString("formula");
+				String formula = infoFormulas.getString("formula");//habrá que quitar la formula más adelante!!
 				int compound_id = infoFormulas.getInt("compound_id");
 				if(formulas.containsKey(formula))
 				{
@@ -42,14 +36,15 @@ public class UserSerching {
 					compound_ids.add(compound_id);
 					formulas.put(formula, compound_ids);
 				}
+				//System.out.println(compound_id);
 			}
-				//System.out.println(formula);
+				
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 
-		}finally { //cerramos todo
+		}finally { //close connections
 			try {
 				if (infoFormulas!=null) {
 					infoFormulas.close();
@@ -69,4 +64,13 @@ public class UserSerching {
 		}
 		return formulas;
 	}
+	
+	/*public static void main(String[] args) { //main used to check this class while implementing it
+		Map<String, Set<Integer>> myMap = UserSerching.searchingElement(2, 9, 1, 1, 0, 0, 0, 10, 0, 10, 0, 10, 0, 1);
+		for (String formula: myMap.keySet())
+		{
+			System.out.println(formula);
+			System.out.println(myMap.get(formula));	
+		}
+	}*/
 }

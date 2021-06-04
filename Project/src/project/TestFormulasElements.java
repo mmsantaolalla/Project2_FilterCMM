@@ -24,7 +24,7 @@ public class TestFormulasElements {
 		//Set<String> tryingFormulas = new TreeSet();
 		
 		// añades formulas del tipo C4H6
-		/*Map<String, Set<Integer>> formulasToTest = new HashMap();
+	/*	Map<String, Set<Integer>> formulasToTest = new HashMap();
 		Set<Integer> compound_ids_invented = new TreeSet();
 		compound_ids_invented.add(1);
 		formulasToTest.put("(C3H6NS2)3.Fe",compound_ids_invented);
@@ -50,10 +50,26 @@ public class TestFormulasElements {
 		*/
 		
 		// select de la BBDD de los compound_ids que tengan esa formula
-		/*try {
+		try {
 				cn = conexion.conect();
+				
+				// obtengo una lista de formulas
+				infoFormulas= stm.executeQuery("SELECT distinct formula FROM compounds");
+				// Filtrar formulas y coger solo validas
+				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
+				
+				// meter en un bucle for para cada formula
+				{
+					// get IDS from formula para cada formula (COMPOUNDS)
+					
+					// get IDS from formula para cada formula (COMPOUND_ELEMENTS)
+					
+					// COMPARAR SET DE IDS FROM COMPOUNDS Y FROM ELEMENTS. PRINT FOMRULA OK IF THEY CONTAIN SAME ELEMENTS
+					// PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES 
+					
+				}
 				stm = cn.createStatement();
-				infoFormulas= stm.executeQuery("SELECT compound_id ,formula FROM compound_elements WHERE MATCH formula");
+				
 				while(infoFormulas.next())
 				{
 					String eachFormula = infoFormulas.getString("formula");
@@ -82,10 +98,10 @@ public class TestFormulasElements {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}*/
+		}
 	
 		// sé el resultado a priori. 
-		/*
+		/*//este no vale!!!!!!!
 		 System.out.println("(C3H6NS2)3.Fe: ids = 1 y  153713");
 		 System.out.println("C2H6O: ids = 2 y  153711");
 		 System.out.println("(2(C14Na15C3)Cl)mon: ids = 3"); 
@@ -96,7 +112,7 @@ public class TestFormulasElements {
 		
 		// compruebo de forma automatica que para cada formula obtenga los resultados esperados. 
 		//select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
-		
+		/*
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
@@ -114,6 +130,10 @@ public class TestFormulasElements {
 				int S = infoFormulas.getInt("S");	
 				System.out.println("By hand:");
 				//System.out.println("compound_id 153718 formula = C20H22N2O2");
+				int expectedC = 20;
+				
+				if(check all elements con los elementos esperados
+				
 				//System.out.println("C=20, N=2, Cl=0, O=2, H=22, P=0, S=0");
 				System.out.println("compound_id 153713 formula = (C3H6NS2)3.Fe");
 				System.out.println("C=9, N=3, Cl=0, O=0, H=18, P=0, S=6");
@@ -143,7 +163,7 @@ public class TestFormulasElements {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 		
 		
 		// ["C","N","Cl","O","H","P","S"]
@@ -152,5 +172,7 @@ public class TestFormulasElements {
 		// compruebo que los elementos son los correctos para 10/15 formulas. 
 		
 	}
+	
 }
+
 

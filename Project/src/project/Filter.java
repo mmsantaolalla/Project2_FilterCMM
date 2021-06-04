@@ -23,9 +23,9 @@ public class Filter {
 	private static Set rightFormulas = new TreeSet();
 	private static Set wrongFormulas = new TreeSet();
 
-	private static String regExpToDiscardRFormulas = "([)]+[a-z]|[a-z]+[a-z]|[R][^a-z]?[1-9]?[0-9]*)";//No R o mon... quitar las formulas que estan mal
+	private static String regExpToDiscardRFormulas = "([)]+[a-z]|[a-z]+[a-z]|[R][^a-z]?[1-9]?[0-9]*)";//No R or mon... takes out this wrong formulas
 	private String regExpToGetSubformulasWithElement;//subformulas
-	//private static String regExpGetNumberAfterParenthesis = "[)][1-9]?[0-9]*"; //sacar los numeros que multiplican a las subformulas
+	//private static String regExpGetNumberAfterParenthesis = "[)][1-9]?[0-9]*"; //know the subformulas multiplyier numbers
 	private String regexpGetElementsComponentInSimpleFormula;
 	//private static String regExpEliminateParenthesis = "([^0-9]+)";
 	//private static String regExpGetAllNumbers = "([1-9]+)";
@@ -35,7 +35,7 @@ public class Filter {
 	public Filter(String componente) {
 		this.componente = componente;
 		this.regExpToGetSubformulasWithElement = "([(](.*)" + componente + "(.*)[)]+[1-9]?[0-9]*)";//subformulas
-		this.regexpGetElementsComponentInSimpleFormula = "(" + componente + "[1-9][0-9]*|" + componente + "[^a-z])|" + componente + "\\Z"; //seleccionar los carbonos (para sumar)
+		this.regexpGetElementsComponentInSimpleFormula = "(" + componente + "[1-9][0-9]*|" + componente + "[^a-z])|" + componente + "\\Z"; //select the component (to add)
 	}
 
 	private int getNumberElementsInFormula(String formulaToGetElements) {
@@ -49,7 +49,7 @@ public class Filter {
 			String subformula = mat.group();
 			copyOfFormula = copyOfFormula.replace(subformula, "");
 
-			// recorremos el array desde detras hacia delante hasta que encontremos el primer parentesis
+			// we go through the array from back to front until we find the first parenthesis
 			String multiplicador = "";
 			int multiplicadorInt = 0;
 			for (int i = subformula.length() - 1; i >= 0; i--) {
@@ -62,7 +62,7 @@ public class Filter {
 					break;
 				}
 			}
-			if (multiplicador.isEmpty()){// si esta vacio, el multiplicador es 1
+			if (multiplicador.isEmpty()){ // if it is empty the multiplier is 1
 				multiplicadorInt = 1;
 			} 
 			else {
@@ -71,10 +71,11 @@ public class Filter {
 				subformula = subformula.substring(0, subformula.length() - lengthMultiplicador);
 			}
 			subformula = subformula.substring(1, subformula.length() - 1);
-			// Debemos obtener el numero o numeros del final 
-			// si no encuentro numeros detras de la subformula aparece 1 vez dicha subformula
-			// si los encuentro, me quedo el numero y multiplico luego las aparciiones por ese nÃºmero.
-			// Elimino los parentesis despues de quedarme con el numero. ¿Como? Substring desde 1 a length - 1
+			
+			// We must get the number or numbers at the end
+			// if I can't find numbers behind the subformula, the subformula appears 1 time
+			// if I find them, I keep the number and then multiply the appearances by that number.
+			// I remove the parentheses after keeping the number. How? Substring from 1 to length - 1
 
 			if (subformula.contains("(")) {
 
@@ -105,7 +106,7 @@ public class Filter {
 				num2=0;}
 
 			if (num2 == 0) {
-				num += 1; // si es C sin numero, debes sumar 1
+				num += 1; // if C doesn't have a number after it, we add 1
 			} else {
 
 				num += num2;
@@ -114,7 +115,7 @@ public class Filter {
 		return num;
 	}
 
-	public static boolean isCorrectFormula(String formula)//Collection<String> formula) //funciona bien
+	public static boolean isCorrectFormula(String formula)
 	{
 		Pattern pat = Pattern.compile(regExpToDiscardRFormulas);
 		Matcher mat = pat.matcher(formula);
@@ -126,7 +127,7 @@ public class Filter {
 		}
 	}
 
-	public static Set discardformulas(Set<String> formula)//Collection<String> formula) //funciona bien
+	public static Set discardformulas(Set<String> formula)
 	{
 		for (String s : formula) { 
 			Pattern pat = Pattern.compile(regExpToDiscardRFormulas);
@@ -135,7 +136,7 @@ public class Filter {
 				wrongFormulas.add(s);
 			}
 			else {
-				rightFormulas.add(s);//se añada las buenas al array
+				rightFormulas.add(s);//good one's in this array
 			}
 		}
 		return rightFormulas;
@@ -193,16 +194,17 @@ public class Filter {
 					numS= filter.getNumberElementsInFormula(formula);
 					ElementoS.put(formula, numS );
 				}
-				//introducir la formula en la base de datos
+				//introduce the formula in the data base
 			}
 			Set<Integer> compound_ids = mapFormulasCompoundIds.get(formula);
 			for(Integer compound_id : compound_ids)
 			{
-				InsertTabla.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS,formula);
+				InsertTable.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS,formula);
 			}
 		}
 	}
 
+	//main used to check while implementing these functions
 	/* public static void main(String[] args) {
 
     	Set<String> formulasToTest = new TreeSet();

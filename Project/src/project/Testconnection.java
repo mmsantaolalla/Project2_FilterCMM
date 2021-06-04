@@ -11,9 +11,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class Testconecction {
+public class Testconnection {
 	public static Map<String, Set<Integer>> conectionStatement (){
-		//ArrayList <String>formulas = new ArrayList<String>();
 		Map<String, Set<Integer>> formulas = new HashMap();
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
@@ -50,7 +49,7 @@ public class Testconecction {
 		} catch (SQLException e) {
 			e.printStackTrace();
 
-		}finally { //cerramos todo
+		}finally { //close
 			try {
 				if (infoFormulas!=null) {
 					infoFormulas.close();
