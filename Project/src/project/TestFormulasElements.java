@@ -15,39 +15,13 @@ import java.util.TreeSet;
 //import com.sun.tools.javac.util.List;
 
 public class TestFormulasElements {
-	
+
 	public static void main(String[] args) {
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
 		Statement stm = null;
 		ResultSet infoFormulas = null;
 		//Set<String> tryingFormulas = new TreeSet();
-		
-		// añades formulas del tipo C4H6
-	/*	Map<String, Set<Integer>> formulasToTest = new HashMap();
-		Set<Integer> compound_ids_invented = new TreeSet();
-		compound_ids_invented.add(1);
-		formulasToTest.put("(C3H6NS2)3.Fe",compound_ids_invented);
-		Filter.createCompoundMap(formulasToTest);
-		compound_ids_invented.add(2);
-		formulasToTest.put("C2H6O",compound_ids_invented);
-		Filter.createCompoundMap(formulasToTest);
-		compound_ids_invented.add(3);
-		formulasToTest.put("(2(C14Na15C3)Cl)mon",compound_ids_invented);//shouldn't found any like it, as it should be discard
-		Filter.createCompoundMap(formulasToTest);
-		*/
-		
-		/*
-		compound_ids_invented.add(4);
-		formulasToTest.put("C20H30O2",compound_ids_invented);
-		Filter.createCompoundMap(formulasToTest);
-		compound_ids_invented.add(5);
-		formulasToTest.put("C39H65NO14",compound_ids_invented);
-		Filter.createCompoundMap(formulasToTest);
-		compound_ids_invented.add(6);
-		formulasToTest.put("C39H65NO14",compound_ids_invented);
-		Filter.createCompoundMap(formulasToTest);
-		*/
 		
 		// select de la BBDD de los compound_ids que tengan esa formula
 		try {
@@ -110,9 +84,49 @@ public class TestFormulasElements {
 		 */
 		
 		
-		// compruebo de forma automatica que para cada formula obtenga los resultados esperados. 
+		 
 		//select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
+		
+
+		
+		
+		// ["C","N","Cl","O","H","P","S"]
+		// select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
+		
+		// compruebo que los elementos son los correctos para 10/15 formulas. 
+		
+	}
+	public static void manualFormulas () { //añades formulas del tipo C4H6
+		Map<String, Set<Integer>> formulasToTest = new HashMap();
+		Set<Integer> compound_ids_invented = new TreeSet();
+		compound_ids_invented.add(1);
+		formulasToTest.put("(C3H6NS2)3.Fe",compound_ids_invented);
+		Filter.createCompoundMap(formulasToTest);
+		compound_ids_invented.add(2);
+		formulasToTest.put("C2H6O",compound_ids_invented);
+		Filter.createCompoundMap(formulasToTest);
+		compound_ids_invented.add(3);
+		formulasToTest.put("(2(C14Na15C3)Cl)mon",compound_ids_invented);//shouldn't found any like it, as it should be discard
+		Filter.createCompoundMap(formulasToTest);
+		
 		/*
+		compound_ids_invented.add(4);
+		formulasToTest.put("C20H30O2",compound_ids_invented);
+		Filter.createCompoundMap(formulasToTest);
+		compound_ids_invented.add(5);
+		formulasToTest.put("C39H65NO14",compound_ids_invented);
+		Filter.createCompoundMap(formulasToTest);
+		compound_ids_invented.add(6);
+		formulasToTest.put("C39H65NO14",compound_ids_invented);
+		Filter.createCompoundMap(formulasToTest);
+		*/
+	}
+	
+	public static void checkFilter () {
+		Conexion conexion = new Conexion(); 
+		Connection cn= null;
+		Statement stm = null;
+		ResultSet infoFormulas = null;
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
@@ -130,8 +144,14 @@ public class TestFormulasElements {
 				int S = infoFormulas.getInt("S");	
 				System.out.println("By hand:");
 				//System.out.println("compound_id 153718 formula = C20H22N2O2");
-				int expectedC = 20;
-				
+				int expectedC = 9; //20;
+				int expectedN = 3; //2;
+				int expectedCl = 0;
+				int expectedO = 0; //2;
+				int expectedH = 18; //22;
+				int expectedP = 0;
+				int expectedS = 6; //0;
+				// compruebo de forma automatica que para cada formula obtenga los resultados esperados.
 				if(check all elements con los elementos esperados
 				
 				//System.out.println("C=20, N=2, Cl=0, O=2, H=22, P=0, S=0");
@@ -163,16 +183,8 @@ public class TestFormulasElements {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
-		
-		
-		// ["C","N","Cl","O","H","P","S"]
-		// select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
-		
-		// compruebo que los elementos son los correctos para 10/15 formulas. 
-		
 	}
-	
+	}
 }
 
 
