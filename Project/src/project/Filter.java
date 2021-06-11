@@ -154,7 +154,7 @@ public class Filter {
 
 	public static void createCompoundMap (Map<String, Set<Integer>> mapFormulasCompoundIds) {
 		Map<String, Integer> ElementoC = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoN = new HashMap<String, Integer>();
+		Map<String, Integer> ElementoN = new HashMap<String, Integer>();//siguen siendo necesarios??
 		Map<String, Integer> ElementoCl = new HashMap<String, Integer>();
 		Map<String, Integer> ElementoO = new HashMap<String, Integer>();
 		Map<String, Integer> ElementoH = new HashMap<String, Integer>();
