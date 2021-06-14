@@ -20,7 +20,7 @@ public class Main {
 				boolean correctOption = false;
 				do {
 					System.out.println("\nOPTIONS:");
-					System.out.println("1. Call the data base and filter it saving the results in a new table");
+					System.out.println("1. Call the data base and filter it saving the results in the new table");
 					System.out.println("2. Search for a concrete formula according to the number of occurrences of each element");
 					System.out.println("0. Exit");
 					System.out.print("\nPlease select an option: ");

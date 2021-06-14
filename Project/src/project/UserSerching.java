@@ -19,13 +19,13 @@ public class UserSerching {
 
 		try {
 			cn = conexion.conect();
-			stm = cn.createStatement();
+			stm = cn.createStatement();//habrá que quitar la formula más adelante de esta tabla y llamar a la otra segun el compound id encontrado
 			infoFormulas= stm.executeQuery("SELECT compound_id,formula FROM compound_elements WHERE (C BETWEEN " + Cmin+ " AND " + Cmax+ ") AND (N BETWEEN " +Nmin+ " AND " + Nmax+ ") AND (Cl BETWEEN " +Clmin+ " AND " +Clmax+ ") AND (O BETWEEN " +Omin+ " AND " +Omax+ ") AND (H BETWEEN " +Hmin+ " AND " +Hmax+ ") AND (P BETWEEN " +Pmin+ " AND " +Pmax+ ") AND (S BETWEEN " +Smin+ " AND " +Smax+ ")");
 			
 			while(infoFormulas.next())
 			{
-				String formula = infoFormulas.getString("formula");//habrá que quitar la formula más adelante!!
-				int compound_id = infoFormulas.getInt("compound_id");
+				String formula = infoFormulas.getString("formula");
+				int compound_id = infoFormulas.getInt("compound_id");//enseñar el compound id?
 				if(formulas.containsKey(formula))
 				{
 					Set<Integer> compound_ids_from_formula = formulas.get(formula);

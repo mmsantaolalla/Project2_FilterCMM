@@ -1,5 +1,6 @@
 package project;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import java.sql.ResultSet;
@@ -16,44 +17,53 @@ import java.util.TreeSet;
 
 public class TestFormulasElements {
 
-	public static void main(String[] args) {
+	public static void testCompound () {
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
 		Statement stm = null;
+		Statement stm_compounds = null;
+		Statement stm_compound_elements =null;
 		ResultSet infoFormulas = null;
-		//Set<String> tryingFormulas = new TreeSet();
+		ResultSet id_compounds = null;
+		ResultSet id_compound_elements = null;
+		Set <String> tryingFormulas = new TreeSet();
 		
 		// select de la BBDD de los compound_ids que tengan esa formula
 		try {
-				cn = conexion.conect();
-				
-				// obtengo una lista de formulas
-				infoFormulas= stm.executeQuery("SELECT distinct formula FROM compounds");
+			cn = conexion.conect();
+			Boolean correct = false;
+			// obtengo una lista de formulas
+			//infoFormulas= stm.executeQuery("SELECT formula FROM compounds WHERE formula = '(C3H6NS2)3.Fe'");
+			//while (infoFormulas.next()) {
+				//tryingFormulas.add(infoFormulas.getString("formula"));
+				tryingFormulas.add("(C3H6NS2)3.Fe");
 				// Filtrar formulas y coger solo validas
+				Filter.discardformulas(tryingFormulas);
 				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
-				
-				// meter en un bucle for para cada formula
+				for (String formula : tryingFormulas)// meter en un bucle for para cada formula
 				{
+					id_compounds = stm_compounds.executeQuery("SELECT compound_id FROM compounds WHERE formula = " + formula ); //hacen falta las comillas? '(C3H6NS2)3.Fe'
 					// get IDS from formula para cada formula (COMPOUNDS)
-					
+					id_compound_elements = stm_compound_elements.executeQuery("SELECT compound_id FROM compound_elements WHERE formula = " + formula ); 
 					// get IDS from formula para cada formula (COMPOUND_ELEMENTS)
-					
-					// COMPARAR SET DE IDS FROM COMPOUNDS Y FROM ELEMENTS. PRINT FOMRULA OK IF THEY CONTAIN SAME ELEMENTS
-					// PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES 
-					
+					if(id_compounds == id_compound_elements) { // COMPARAR SET DE IDS FROM COMPOUNDS Y FROM ELEMENTS. PRINT FOMRULA OK IF THEY CONTAIN SAME ELEMENTS
+						correct = true;
+						System.out.println("The formula is correct. It is has de same ids in both tables");
+					}
+					else {
+						Set<Integer> compound_ids = new HashSet<>();
+						compound_ids.add(id_compounds.getInt("compound_id"));
+						Set<Integer> compound_elements_ids = new HashSet<>();
+						compound_elements_ids.add(id_compound_elements.getInt("compound_id"));
+						System.out.println("It is incorrect!"); // PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES
+						System.out.println("The ids from the formula: " +formula);
+						System.out.println("In the table compounds = " +compound_ids);
+						System.out.println("In the table compound_elements = " +compound_elements_ids);
+					}
 				}
-				stm = cn.createStatement();
-				
-				while(infoFormulas.next())
-				{
-					String eachFormula = infoFormulas.getString("formula");
-					Set<Integer> compound_ids = new HashSet<>();
-					//List<Set<Integer>> compound_ids =  new ArrayList<>();
-					compound_ids.add(infoFormulas.getInt("compound_id"));
-					System.out.println(eachFormula + "ids:" +compound_ids);
-				}
-			}
-		catch (SQLException e) {
+			//}
+				//stm = cn.createStatement();
+		}catch (SQLException e) {
 			e.printStackTrace();
 
 		}finally { //cerramos todo
@@ -73,29 +83,8 @@ public class TestFormulasElements {
 				e.printStackTrace();
 			}
 		}
-	
-		// sé el resultado a priori. 
-		/*//este no vale!!!!!!!
-		 System.out.println("(C3H6NS2)3.Fe: ids = 1 y  153713");
-		 System.out.println("C2H6O: ids = 2 y  153711");
-		 System.out.println("(2(C14Na15C3)Cl)mon: ids = 3"); 
-		 //solo el introducido por mi, solo debe de tener el mio, ya que en la base de datos se deberia haber descartado
-		 System.out.prinln("C39H65NO14" : ids = 
-		 */
-		
-		
-		 
-		//select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
-		
-
-		
-		
-		// ["C","N","Cl","O","H","P","S"]
-		// select C,N, ... , from compound_elements where compound_id = 5; La formula de 5 la conozco
-		
-		// compruebo que los elementos son los correctos para 10/15 formulas. 
-		
 	}
+	
 	public static void manualFormulas () { //añades formulas del tipo C4H6
 		Map<String, Set<Integer>> formulasToTest = new HashMap();
 		Set<Integer> compound_ids_invented = new TreeSet();
@@ -130,61 +119,74 @@ public class TestFormulasElements {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
+			Boolean correct = false;
+			String eachFormula = "";
+			int C=0, N=0, Cl=0, O=0, H=0, P=0, S=0;
+			int expectedC =0, expectedN =0, expectedCl =0, expectedO =0, expectedH =0, expectedP =0, expectedS =0; 
 			//infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= 153718");
 			infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= 153713");
 			while(infoFormulas.next())
 			{
-				String eachFormula = infoFormulas.getString("formula");
-				int C = infoFormulas.getInt("C");				
-				int N = infoFormulas.getInt("N");
-				int Cl = infoFormulas.getInt("Cl");
-				int O = infoFormulas.getInt("O");
-				int H = infoFormulas.getInt("H");
-				int P = infoFormulas.getInt("P");
-				int S = infoFormulas.getInt("S");	
-				System.out.println("By hand:");
-				//System.out.println("compound_id 153718 formula = C20H22N2O2");
-				int expectedC = 9; //20;
-				int expectedN = 3; //2;
-				int expectedCl = 0;
-				int expectedO = 0; //2;
-				int expectedH = 18; //22;
-				int expectedP = 0;
-				int expectedS = 6; //0;
+				
+				eachFormula = infoFormulas.getString("formula");
+				C = infoFormulas.getInt("C");				
+				N = infoFormulas.getInt("N");
+				Cl = infoFormulas.getInt("Cl");
+				O = infoFormulas.getInt("O");
+				H = infoFormulas.getInt("H");
+				P = infoFormulas.getInt("P");
+				S = infoFormulas.getInt("S");	
+				
+				expectedC = 9; //20;
+				expectedN = 3; //2;
+				expectedCl = 0;
+				expectedO = 0; //2;
+				expectedH = 18; //22;
+				expectedP = 0;
+				expectedS = 6; //0;
 				// compruebo de forma automatica que para cada formula obtenga los resultados esperados.
-				if(check all elements con los elementos esperados
-				
-				//System.out.println("C=20, N=2, Cl=0, O=2, H=22, P=0, S=0");
-				System.out.println("compound_id 153713 formula = (C3H6NS2)3.Fe");
-				System.out.println("C=9, N=3, Cl=0, O=0, H=18, P=0, S=6");
-				
-				System.out.println("Filter:");
-				//System.out.println("compound_id 153718 formula = " + eachFormula);
-				System.out.println("compound_id 153713 formula = " + eachFormula);
+				//check all elements con los elementos esperados
+				if(C ==expectedC & N == expectedN & Cl == expectedCl & O == expectedO & H == expectedH & P == expectedP & S == expectedS) {
+					correct= true;
+				}
+
+			}
+			if(correct == true) {
+				System.out.println ("The filtered elements from the formula are the same as the expected ones");
+				System.out.println ("The filter works correctly");
+			}
+			else { //correct == false
+				System.out.println ("The filtered elements from the formula and the expected ones doesn't ");
+				System.out.println ("The expected elementes for the formula: " + eachFormula);
+				System.out.println("C=" +expectedC+ ", N=" +expectedN+ ", Cl=" +expectedCl+ ", O=" +expectedO+ ", H=" +expectedH+ ", P=" +expectedP+ ", S="+ expectedS);
+				System.out.println("and the filtered ones: ");
 				System.out.println("C=" +C+ ", N=" +N+ ", Cl=" +Cl+ ", O=" +O+ ", H=" +H+ ", P=" +P+ ", S=" +S);
 			}
 		}
-	catch (SQLException e) {
-		e.printStackTrace();
-
-	}finally { //cerramos todo
-		try {
-			if (infoFormulas!=null) {
-				infoFormulas.close();
-			} 
-			if(stm!=null) {
-				stm.close();
-			}
-			if(cn!=null) {
-				cn.close();
-			}
-
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
+		catch (SQLException e) {
 			e.printStackTrace();
+
+		}finally { //cerramos todo
+			try {
+				if (infoFormulas!=null) {
+					infoFormulas.close();
+				} 
+				if(stm!=null) {
+					stm.close();
+				}
+				if(cn!=null) {
+					cn.close();
+				}
+
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	}
+
+
+public static void main(String[] args) throws IOException {	
+	testCompound();
 }
-
-
+}
