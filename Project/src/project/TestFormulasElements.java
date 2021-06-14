@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-//import com.sun.tools.javac.util.List;
 
 public class TestFormulasElements {
 
@@ -186,7 +185,8 @@ public class TestFormulasElements {
 	}
 
 
-public static void main(String[] args) throws IOException {	
-	testCompound();
-}
+	public static void main(String[] args) throws IOException {	
+		//checkFilter();
+		testCompound();
+	}
 }
