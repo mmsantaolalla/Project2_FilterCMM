@@ -1,5 +1,6 @@
 package project;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,4 +70,20 @@ public class Testconnection {
 		}
 		return formulas;
 	}
+	
+/*	public static void main(String[] args) throws IOException {
+		try {
+			Map<String, Set<Integer>> allFormulas;
+			allFormulas = conectionStatement();
+			
+			System.out.println("_________");
+			System.out.println(allFormulas.keySet());
+			System.out.println("_________");
+
+			Filter.createCompoundMap(allFormulas);	
+			System.out.println("The filter has been made and save for the formulas");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}*/
 }

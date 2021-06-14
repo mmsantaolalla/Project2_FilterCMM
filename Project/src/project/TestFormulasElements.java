@@ -25,39 +25,60 @@ public class TestFormulasElements {
 		ResultSet infoFormulas = null;
 		ResultSet id_compounds = null;
 		ResultSet id_compound_elements = null;
-		Set <String> tryingFormulas = new TreeSet();
+		Set <String> FormulasToTest = new TreeSet();
 		
 		// select de la BBDD de los compound_ids que tengan esa formula
 		try {
 			cn = conexion.conect();
-			Boolean correct = false;
 			// obtengo una lista de formulas
 			//infoFormulas= stm.executeQuery("SELECT formula FROM compounds WHERE formula = '(C3H6NS2)3.Fe'");
 			//while (infoFormulas.next()) {
 				//tryingFormulas.add(infoFormulas.getString("formula"));
-				tryingFormulas.add("(C3H6NS2)3.Fe");
-				// Filtrar formulas y coger solo validas
-				Filter.discardformulas(tryingFormulas);
+				FormulasToTest.add("(C3H6NS2)3.Fe");
+				
+				Filter.discardformulas(FormulasToTest); // Filtrar formulas y coger solo validas
 				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
-				for (String formula : tryingFormulas)// meter en un bucle for para cada formula
+				for (String formula : FormulasToTest)// meter en un bucle for para cada formula
 				{
+					Boolean correct = true;
 					id_compounds = stm_compounds.executeQuery("SELECT compound_id FROM compounds WHERE formula = " + formula ); //hacen falta las comillas? '(C3H6NS2)3.Fe'
 					// get IDS from formula para cada formula (COMPOUNDS)
 					id_compound_elements = stm_compound_elements.executeQuery("SELECT compound_id FROM compound_elements WHERE formula = " + formula ); 
 					// get IDS from formula para cada formula (COMPOUND_ELEMENTS)
-					if(id_compounds == id_compound_elements) { // COMPARAR SET DE IDS FROM COMPOUNDS Y FROM ELEMENTS. PRINT FOMRULA OK IF THEY CONTAIN SAME ELEMENTS
-						correct = true;
-						System.out.println("The formula is correct. It is has de same ids in both tables");
+					
+					int tamcompounds = id_compounds.getFetchSize();
+					int tamcompound_elements = id_compound_elements.getFetchSize();
+					if(tamcompounds == tamcompound_elements) {// comprobar tamaño de las dos
+						while (id_compounds.next()) {// recorrer resultSet y comparar uno por uno los ids.
+							while(id_compound_elements.next()) {
+								if(!(id_compounds.equals(id_compound_elements))) {
+									correct = false;
+								}
+								
+							}
+						}
 					}
 					else {
-						Set<Integer> compound_ids = new HashSet<>();
+						correct = false;
+					}
+
+					
+					
+					// for y crear conjuntos de datos
+					/*
+					 * Set<Integer> compound_ids = new HashSet<>();
 						compound_ids.add(id_compounds.getInt("compound_id"));
 						Set<Integer> compound_elements_ids = new HashSet<>();
 						compound_elements_ids.add(id_compound_elements.getInt("compound_id"));
+					 * 
+					 */
+					// 
+					if(!correct) {
+						
 						System.out.println("It is incorrect!"); // PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES
-						System.out.println("The ids from the formula: " +formula);
-						System.out.println("In the table compounds = " +compound_ids);
-						System.out.println("In the table compound_elements = " +compound_elements_ids);
+						System.out.println("The ids from the formula: " + formula);
+						System.out.println("In the table compounds = " + compound_ids);
+						System.out.println("In the table compound_elements = " + compound_elements_ids);
 					}
 				}
 			//}
