@@ -60,7 +60,7 @@ public class TestFormulasElements {
 					else {
 						correct = false;
 					}
-					//for(int i =0; i<=tamcompounds; i++) {
+					//for para todo esto {
 						//Set<Integer> compound_ids = new HashSet<>();
 						//compound_ids.add(id_compounds.getInt("compound_id"));
 						//Set<Integer> compound_elements_ids = new HashSet<>();
@@ -108,7 +108,7 @@ public class TestFormulasElements {
 		}
 	}
 	
-	public static void manualFormulas () { //añades formulas del tipo C4H6
+	public static void manualFormulas () { //introduce formulas manually to validate the testCompound validation
 		Map<String, Set<Integer>> formulasToTest = new HashMap();
 		Set<Integer> compound_ids_invented = new TreeSet();
 		compound_ids_invented.add(1);
@@ -168,8 +168,8 @@ public class TestFormulasElements {
 				expectedH = 18; //22;
 				expectedP = 0;
 				expectedS = 6; //0;
-				// compruebo de forma automatica que para cada formula obtenga los resultados esperados.
-				//check all elements con los elementos esperados
+				//check automatically that for each formula the expect results are the ones obtained.
+				//check all elements with the expected elements
 				if(C ==expectedC & N == expectedN & Cl == expectedCl & O == expectedO & H == expectedH & P == expectedP & S == expectedS) {
 					correct= true;
 				}
@@ -190,7 +190,7 @@ public class TestFormulasElements {
 		catch (SQLException e) {
 			e.printStackTrace();
 
-		}finally { //cerramos todo
+		}finally { //close
 			try {
 				if (infoFormulas!=null) {
 					infoFormulas.close();
@@ -216,11 +216,12 @@ public class TestFormulasElements {
 		ResultSet infoFormulas = null;
 		try {
 			cn = conexion.conect();
-			stm.executeQuery("ALTER TABLE compound_elements DROP COLUMN formula");
+			stm.executeQuery("ALTER TABLE compound_elements DROP COLUMN formula"); 
+			//take out the formula column as it is only useful for the validation
 			System.out.println("Column discarded successfully");
 		}catch(Exception e) {
 				e.printStackTrace();
-		}finally { //cerramos todo
+		}finally { //close everything
 			try {
 				if (infoFormulas!=null) {
 					infoFormulas.close();

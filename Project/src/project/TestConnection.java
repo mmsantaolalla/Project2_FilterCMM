@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class Testconnection {
-	public static Map<String, Set<Integer>> conectionStatement (){
+public class TestConnection {
+	public static Map<String, Set<Integer>> connectionStatement (){
 		Map<String, Set<Integer>> formulas = new HashMap();
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
@@ -74,7 +74,7 @@ public class Testconnection {
 /*	public static void main(String[] args) throws IOException {
 		try {
 			Map<String, Set<Integer>> allFormulas;
-			allFormulas = conectionStatement();
+			allFormulas = connectionStatement();
 			
 			System.out.println("_________");
 			System.out.println(allFormulas.keySet());

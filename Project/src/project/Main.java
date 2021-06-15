@@ -43,7 +43,7 @@ public class Main {
 		}
 	}
 	
-	public static void mainUser() throws IOException {
+	/*public static void mainUser() throws IOException {
 		
 		System.out.println("Do you want to search for a formula? YES/NO");
 		String responseSearch = reader.readLine();
@@ -67,6 +67,6 @@ public class Main {
 			System.out.println("Please introduce YES or NO");
 			mainUser();
 		}
-	}
+	}*/
 	
 }
