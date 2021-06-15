@@ -35,7 +35,7 @@ public class TestFormulasElements {
 			//while (infoFormulas.next()) {
 				//tryingFormulas.add(infoFormulas.getString("formula"));
 				FormulasToTest.add("(C3H6NS2)3.Fe");
-				
+				FormulasToTest.add("C39H65NO14");
 				Filter.discardformulas(FormulasToTest); // Filtrar formulas y coger solo validas
 				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
 				for (String formula : FormulasToTest)// meter en un bucle for para cada formula
@@ -54,49 +54,52 @@ public class TestFormulasElements {
 								if(!(id_compounds.equals(id_compound_elements))) {
 									correct = false;
 								}
-								
 							}
 						}
 					}
 					else {
 						correct = false;
 					}
-
-					
-					
-					// for y crear conjuntos de datos
-					/*
-					 * Set<Integer> compound_ids = new HashSet<>();
-						compound_ids.add(id_compounds.getInt("compound_id"));
-						Set<Integer> compound_elements_ids = new HashSet<>();
-						compound_elements_ids.add(id_compound_elements.getInt("compound_id"));
-					 * 
-					 */
-					// 
+					//for(int i =0; i<=tamcompounds; i++) {
+						//Set<Integer> compound_ids = new HashSet<>();
+						//compound_ids.add(id_compounds.getInt("compound_id"));
+						//Set<Integer> compound_elements_ids = new HashSet<>();
+						//compound_elements_ids.add(id_compound_elements.getInt("compound_id"));
 					if(!correct) {
-						
 						System.out.println("It is incorrect!"); // PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES
 						System.out.println("The ids from the formula: " + formula);
-						System.out.println("In the table compounds = " + compound_ids);
-						System.out.println("In the table compound_elements = " + compound_elements_ids);
+						System.out.println("In the table compounds = "); //+ compound_ids);
+						System.out.println("In the table compound_elements = "); //+ compound_elements_ids);
 					}
-				}
-			//}
+				}	
+			
 				//stm = cn.createStatement();
-		}catch (SQLException e) {
-			e.printStackTrace();
+			}catch (SQLException e) {
+				e.printStackTrace();
 
-		}finally { //cerramos todo
-			try {
-				if (infoFormulas!=null) {
-					infoFormulas.close();
-				} 
-				if(stm!=null) {
-					stm.close();
-				}
-				if(cn!=null) {
-					cn.close();
-				}
+			}finally { //cerramos todo
+				try {
+					if (infoFormulas!=null) {
+						infoFormulas.close();
+					} 
+					if (id_compounds!=null) {
+						id_compounds.close();
+					} 
+					if (id_compound_elements!=null) {
+						id_compound_elements.close();
+					} 
+					if(stm!=null) {
+						stm.close();
+					}
+					if(stm_compounds!=null) {
+						stm_compounds.close();
+					}
+					if(stm_compound_elements!=null) {
+						stm_compound_elements.close();
+					}
+					if(cn!=null) {
+						cn.close();
+					}
 
 			}catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -143,8 +146,9 @@ public class TestFormulasElements {
 			String eachFormula = "";
 			int C=0, N=0, Cl=0, O=0, H=0, P=0, S=0;
 			int expectedC =0, expectedN =0, expectedCl =0, expectedO =0, expectedH =0, expectedP =0, expectedS =0; 
-			//infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= 153718");
-			infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= 153713");
+			int id_introduced = 153713; //153718;
+
+			infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= " + id_introduced );
 			while(infoFormulas.next())
 			{
 				
@@ -206,8 +210,8 @@ public class TestFormulasElements {
 	}
 
 
-	public static void main(String[] args) throws IOException {	
+	/*public static void main(String[] args) throws IOException {	
 		//checkFilter();
 		testCompound();
-	}
+	}*/
 }

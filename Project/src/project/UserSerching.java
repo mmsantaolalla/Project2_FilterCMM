@@ -24,7 +24,7 @@ public class UserSerching {
 			
 			while(infoFormulas.next())
 			{
-				String formula = infoFormulas.getString("formula");
+				String formula = infoFormulas.getString("formula"); //como lo hago si enseña la formula, pero en mi tabla no la hay
 				int compound_id = infoFormulas.getInt("compound_id");//enseñar el compound id?
 				if(formulas.containsKey(formula))
 				{
