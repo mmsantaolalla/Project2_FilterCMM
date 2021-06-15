@@ -1,4 +1,4 @@
-create table compound_elements{
+create table ex (
 	compound_id INT NOT NULL PRIMARY KEY,
 	C int NOT NULL default 0,
 	N int NOT NULL default 0,
@@ -7,7 +7,7 @@ create table compound_elements{
 	H int NOT NULL default 0,
 	P int NOT NULL default 0,
 	S int NOT NULL default 0,
-	formula varchar(100) not null default null;
+	formula varchar(100) not null default null,
 
 	FOREIGN KEY(compound_id) REFERENCES compounds(compound_id) ON DELETE CASCADE, 
 	INDEX compound_elements_C_index (C),
@@ -16,7 +16,6 @@ create table compound_elements{
 	INDEX compound_elements_O_index (O),
 	INDEX compound_elements_H_index (H),
 	INDEX compound_elements_P_index (P),
-	INDEX compound_elements_S_index (S),
-	//queria crear una foreign key para formula, pero no me deja
+	INDEX compound_elements_S_index (S)
 
-} ENGINE=INNODB;
+) ENGINE=INNODB;

@@ -208,8 +208,38 @@ public class TestFormulasElements {
 			}
 		}
 	}
+	
+	public static void substractFormula() {
+		Conexion conexion = new Conexion(); 
+		Connection cn= null;
+		Statement stm = null;
+		ResultSet infoFormulas = null;
+		try {
+			cn = conexion.conect();
+			stm.executeQuery("ALTER TABLE compound_elements DROP COLUMN formula");
+			System.out.println("Column discarded successfully");
+		}catch(Exception e) {
+				e.printStackTrace();
+		}finally { //cerramos todo
+			try {
+				if (infoFormulas!=null) {
+					infoFormulas.close();
+				} 
+				if(stm!=null) {
+					stm.close();
+				}
+				if(cn!=null) {
+					cn.close();
+				}
 
-
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	/*public static void main(String[] args) throws IOException {	
 		//checkFilter();
 		testCompound();
