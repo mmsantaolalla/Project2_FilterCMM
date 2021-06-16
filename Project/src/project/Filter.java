@@ -153,13 +153,6 @@ public class Filter {
 	}
 
 	public static void createCompoundMap (Map<String, Set<Integer>> mapFormulasCompoundIds) {
-		Map<String, Integer> ElementoC = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoN = new HashMap<String, Integer>();//siguen siendo necesarios??
-		Map<String, Integer> ElementoCl = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoO = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoH = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoP = new HashMap<String, Integer>();
-		Map<String, Integer> ElementoS = new HashMap<String, Integer>();
 		Set<String> formulas = mapFormulasCompoundIds.keySet();
 		String compounds[] = {  "C","N","Cl","O","H","P","S"};
 		for (String formula: formulas) {
@@ -168,31 +161,24 @@ public class Filter {
 				Filter filter = new Filter(compounds[j]);  
 				if(compounds[j].equals("C")) {
 					numC= filter.getNumberElementsInFormula(formula);
-					ElementoC.put(formula, numC );
 				}
 				else if (compounds[j].equals("N")){
 					numN= filter.getNumberElementsInFormula(formula);
-					ElementoN.put(formula, numN );
 				}
 				else if (compounds[j].equals("Cl")){ 
 					numCl= filter.getNumberElementsInFormula(formula);
-					ElementoCl.put(formula, numCl );
 				}
 				else if (compounds[j].equals("O")){ 
 					numO= filter.getNumberElementsInFormula(formula);
-					ElementoO.put(formula, numO );
 				}
 				else if (compounds[j].equals("H")){ 
 					numH= filter.getNumberElementsInFormula(formula);
-					ElementoH.put(formula, numH );
 				}
 				else if (compounds[j].equals("P")){ 
 					numP= filter.getNumberElementsInFormula(formula);
-					ElementoP.put(formula, numP );
 				}
 				else if (compounds[j].equals("S")){ 
 					numS= filter.getNumberElementsInFormula(formula);
-					ElementoS.put(formula, numS );
 				}
 				//introduce the formula in the data base
 			}

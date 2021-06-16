@@ -19,7 +19,6 @@ public class TestFormulasElements {
 	public static void testCompound () {
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
-		Statement stm = null;
 		Statement stm_compounds = null;
 		Statement stm_compound_elements =null;
 		ResultSet infoFormulas = null;
@@ -30,6 +29,8 @@ public class TestFormulasElements {
 		// select de la BBDD de los compound_ids que tengan esa formula
 		try {
 			cn = conexion.conect();
+			stm_compounds = cn.createStatement();
+			stm_compound_elements = cn.createStatement();
 			// obtengo una lista de formulas
 			//infoFormulas= stm.executeQuery("SELECT formula FROM compounds WHERE formula = '(C3H6NS2)3.Fe'");
 			//while (infoFormulas.next()) {
@@ -41,35 +42,41 @@ public class TestFormulasElements {
 				for (String formula : FormulasToTest)// meter en un bucle for para cada formula
 				{
 					Boolean correct = true;
-					id_compounds = stm_compounds.executeQuery("SELECT compound_id FROM compounds WHERE formula = " + formula ); //hacen falta las comillas? '(C3H6NS2)3.Fe'
+					String sqlQuery = "SELECT compound_id FROM compounds WHERE formula = \"" + formula + "\" order by compound_id";
+					id_compounds = stm_compounds.executeQuery(sqlQuery); 
 					// get IDS from formula para cada formula (COMPOUNDS)
-					id_compound_elements = stm_compound_elements.executeQuery("SELECT compound_id FROM compound_elements WHERE formula = " + formula ); 
+					id_compound_elements = stm_compound_elements.executeQuery("SELECT compound_id FROM compound_elements WHERE formula = \"" + formula + "\" order by compound_id"); 
 					// get IDS from formula para cada formula (COMPOUND_ELEMENTS)
 					
-					int tamcompounds = id_compounds.getFetchSize();
-					int tamcompound_elements = id_compound_elements.getFetchSize();
-					if(tamcompounds == tamcompound_elements) {// comprobar tamaño de las dos
-						while (id_compounds.next()) {// recorrer resultSet y comparar uno por uno los ids.
-							while(id_compound_elements.next()) {
-								if(!(id_compounds.equals(id_compound_elements))) {
-									correct = false;
-								}
+					while(id_compounds.next()) {
+						if(id_compound_elements.next())
+						{
+							int compound_id_compounds = id_compounds.getInt("compound_id");
+
+							int compound_id_compounds_elements = id_compound_elements.getInt("compound_id");
+							if(compound_id_compounds != compound_id_compounds_elements)
+							{
+								correct = false;
+								break;
 							}
 						}
+						else {
+							correct = false;
+							break;
+						}
+
 					}
-					else {
+					if(id_compound_elements.next())
+					{
+						// si hay mas resultados en el segundo iterador, el tamaño no es el mismo.
 						correct = false;
 					}
-					//for para todo esto {
-						//Set<Integer> compound_ids = new HashSet<>();
-						//compound_ids.add(id_compounds.getInt("compound_id"));
-						//Set<Integer> compound_elements_ids = new HashSet<>();
-						//compound_elements_ids.add(id_compound_elements.getInt("compound_id"));
+					
 					if(!correct) {
 						System.out.println("It is incorrect!"); // PRINT ERROR AND IDS FROM BOTH TABLES IF THEY HAVE DIFFERENCES
-						System.out.println("The ids from the formula: " + formula);
-						System.out.println("In the table compounds = "); //+ compound_ids);
-						System.out.println("In the table compound_elements = "); //+ compound_elements_ids);
+					}
+					else {
+						System.out.println("Correct test");
 					}
 				}	
 			
@@ -88,9 +95,6 @@ public class TestFormulasElements {
 					if (id_compound_elements!=null) {
 						id_compound_elements.close();
 					} 
-					if(stm!=null) {
-						stm.close();
-					}
 					if(stm_compounds!=null) {
 						stm_compounds.close();
 					}
@@ -241,8 +245,8 @@ public class TestFormulasElements {
 		
 	}
 	
-	/*public static void main(String[] args) throws IOException {	
+	public static void main(String[] args) throws IOException {	
 		//checkFilter();
 		testCompound();
-	}*/
+	}
 }
