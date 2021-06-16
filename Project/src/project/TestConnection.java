@@ -23,7 +23,7 @@ public class TestConnection {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
-			infoFormulas= stm.executeQuery("SELECT formula, compound_id FROM compounds WHERE formula is not null ORDER BY compound_id LIMIT 152948,20");
+			infoFormulas= stm.executeQuery("SELECT distinct formula, compound_id FROM compounds WHERE formula is not null ORDER BY compound_id LIMIT 152948,20");
 			while(infoFormulas.next())
 			{
 
