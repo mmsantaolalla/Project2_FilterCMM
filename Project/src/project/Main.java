@@ -3,6 +3,7 @@ package project;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,16 +23,15 @@ public class Main {
 				responseSearch=reader.readLine();
 			}
 			if(responseSearch.equalsIgnoreCase("YES")) {
-				Map<String, Set<Integer>> implementedMap = new HashMap();
+				Collection<Compound_pojo> implementedMap = new TreeSet<Compound_pojo>();
 				implementedMap = User.search();
 				if(implementedMap.isEmpty())
 				{
 					System.out.println("Formula not found for those characteristics");
 				}
-				for (String formula: implementedMap.keySet())
+				for (Compound_pojo formula: implementedMap)
 				{
-					System.out.println("\n" + formula);
-					System.out.println(implementedMap.get(formula));	
+					System.out.println(formula);
 				}
 			}	
 			else if (responseSearch.equalsIgnoreCase("NO")) {

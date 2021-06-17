@@ -37,6 +37,7 @@ public class TestFormulasElements {
 				//tryingFormulas.add(infoFormulas.getString("formula"));
 				FormulasToTest.add("(C3H6NS2)3.Fe");
 				FormulasToTest.add("C39H65NO14");
+				
 				Filter.discardformulas(FormulasToTest); // Filtrar formulas y coger solo validas
 				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
 				for (String formula : FormulasToTest)// meter en un bucle for para cada formula
@@ -244,9 +245,9 @@ public class TestFormulasElements {
 		}
 		
 	}
-	
+/*	
 	public static void main(String[] args) throws IOException {	
-		//checkFilter();
+		checkFilter();
 		testCompound();
-	}
+	}*/
 }

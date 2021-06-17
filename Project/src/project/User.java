@@ -3,17 +3,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class User { 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
-	public static Map<String, Set<Integer>> search() throws IOException {	
+	public static Collection<Compound_pojo> search() throws IOException {	
 		int minvalue =0,maxvalue=0;
-		Map<String, Set<Integer>> concreteMap = new HashMap();
+		Collection<Compound_pojo> concreteMap = new TreeSet<Compound_pojo>();
 		int minC=0, maxC=0, minN=0, maxN=0, minCl=0, maxCl=0, minO=0, maxO=0, minH=0, maxH=0, minP=0, maxP=0, minS=0, maxS=0;
 		String searchingElements []= {"Carbons", "Nitrogens", "Chlorines", "Oxygens", "Hydrogens", "Phosphorus", "Sulfurs"};
 		for (int i =0; i<searchingElements.length; i++)

@@ -142,7 +142,7 @@ public class Filter {
 		return rightFormulas;
 
 	}
-	private static void printFormulasAndCompounds(String componente, Map<String, Integer> element)
+	/*private static void printFormulasAndCompounds(String componente, Map<String, Integer> element)
 	{
 		System.out.println("Componente "+ componente+ " :");
 		Iterator<String> it = element.keySet().iterator();
@@ -150,7 +150,7 @@ public class Filter {
 			String form = it.next();
 			System.out.println("Formula: " + form + " -> " + componente + " :" + element.get(form));
 		}
-	}
+	}*/
 
 	public static void createCompoundMap (Map<String, Set<Integer>> mapFormulasCompoundIds) {
 		Set<String> formulas = mapFormulasCompoundIds.keySet();
@@ -185,7 +185,7 @@ public class Filter {
 			Set<Integer> compound_ids = mapFormulasCompoundIds.get(formula);
 			for(Integer compound_id : compound_ids)
 			{
-				InsertTable.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS,formula);
+				InsertTable.insertElement(compound_id, numC, numN, numCl, numO, numH, numP, numS, formula);
 			}
 		}
 	}

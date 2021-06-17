@@ -23,7 +23,7 @@ public class TestConnection {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
-			infoFormulas= stm.executeQuery("SELECT distinct formula, compound_id FROM compounds WHERE formula is not null ORDER BY compound_id LIMIT 152948,20");
+			infoFormulas= stm.executeQuery("SELECT distinct formula, compound_id FROM compounds WHERE formula is not null ORDER BY compound_id");
 			while(infoFormulas.next())
 			{
 
@@ -44,7 +44,7 @@ public class TestConnection {
 
 					}
 				}
-				//System.out.println(formula);
+				System.out.println(formula);
 			}
 			
 		} catch (SQLException e) {
@@ -71,7 +71,7 @@ public class TestConnection {
 		return formulas;
 	}
 	
-/*	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		try {
 			Map<String, Set<Integer>> allFormulas;
 			allFormulas = connectionStatement();
@@ -85,5 +85,5 @@ public class TestConnection {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 }

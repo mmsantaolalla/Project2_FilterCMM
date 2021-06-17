@@ -1,7 +1,7 @@
 package project;
 
 
-public class Compound_pojo {
+public class Compound_pojo implements Comparable<Compound_pojo>{
 		// mi entidad compound es un POJO con 4 atributos (ver tipo) con getters (no hacen 
 		// falta setters. SI HACE FALTA toString y Equals (identidad es el compound_id).
 		//compound_id, formula, mass, name
@@ -66,6 +66,21 @@ public class Compound_pojo {
 
 	public void setMass(Double mass) {
 		this.mass = mass;
+	}
+
+	@Override
+	public int compareTo(Compound_pojo o) {
+		// TODO Auto-generated method stub
+		
+		if(this.compound_id>o.compound_id) {
+			return 1;
+		}
+		else if(this.compound_id==o.compound_id) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
 	}
 
 

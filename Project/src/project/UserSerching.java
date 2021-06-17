@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
+//import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 public class UserSerching {
 	/*
@@ -58,7 +59,6 @@ public class UserSerching {
 				compoundSet.add(c);
 				//System.out.println(compound_id);
 			}
-			return compoundSet;
 				
 			
 			
@@ -83,7 +83,7 @@ public class UserSerching {
 			}
 
 		}
-		return formulas;
+		return compoundSet;
 	}
 	
 	/*public static void main(String[] args) { //main used to check this class while implementing it
