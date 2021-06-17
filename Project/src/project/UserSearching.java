@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 //import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
-public class UserSerching {
+public class UserSearching {
 	/*
 	 * It receives the min and max occurrences of each element to filter the compounds
 	 * 

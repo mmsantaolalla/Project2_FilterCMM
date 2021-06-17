@@ -70,7 +70,7 @@ public class TestConnection {
 		}
 		return formulas;
 	}
-	
+	/*
 	public static void main(String[] args) throws IOException {
 		try {
 			Map<String, Set<Integer>> allFormulas;
@@ -85,5 +85,5 @@ public class TestConnection {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

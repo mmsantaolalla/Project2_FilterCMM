@@ -71,7 +71,7 @@ public class User {
 			}
 		}
 			
-		concreteMap = UserSerching.searchingElement(minC, maxC, minN, maxN, minCl, maxCl, minO, maxO, minH, maxH, minP, maxP, minS, maxS);
+		concreteMap = UserSearching.searchingElement(minC, maxC, minN, maxN, minCl, maxCl, minO, maxO, minH, maxH, minP, maxP, minS, maxS);
 		return concreteMap;
 	}
 
