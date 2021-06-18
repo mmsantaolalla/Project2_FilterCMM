@@ -135,15 +135,15 @@ public class UserSearching {
 		return compoundSet;
 		
 	}
-	/*
+
 	public static void main(String[] args) { //main used to check this class while implementing it
-		//Collection<Compound_pojo> mySet = UserSearching.searchingElement(100, 500, 2, 9, 1, 1, 0, 0, 0, 10, 0, 10, 0, 10, 0, 1);//100, 500, 2, 9, 1, 1, no, no, no, P=  0, 10, S= 0,10
-		Collection <Compound_pojo> myMassSet = searchingMass (100,500); 
-		for (Compound_pojo compound: myMassSet)
+		Collection<Compound_pojo> mySet = UserSearching.searchingElement(500, 530, 2, 20, 1, 1, 0, 10000, 0, 100000, 0, 10000, 0, 10, 0, 1);//500, 530, 2, 9, 1, 1, no, no, no, P=  0, 10, S= 0,1
+		//Collection <Compound_pojo> myMassSet = searchingMass (550,555); 
+		for (Compound_pojo compound: mySet)
 		{
 			System.out.println(compound);
 		}
 		
 		
-	}*/
+	}
 }

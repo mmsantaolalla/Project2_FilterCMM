@@ -41,7 +41,7 @@ public class User {
 			else //(response.equalsIgnoreCase("NO")) 
 			{
 				minvalue= 0;
-				maxvalue= 1000; //REVISAR ESTA REFERENCIA!!, ES PARA QUE COJA TODAS
+				maxvalue= 100000; //REVISAR ESTA REFERENCIA!!, ES PARA QUE COJA TODAS
 			}
 
 			//save the values for each element
