@@ -76,7 +76,7 @@ public class User {
 		}
 			
 		concreteMap = UserSearching.searchingElement(minmass, maxmass, minC, maxC, minN, maxN, minCl, maxCl, minO, maxO, minH, maxH, minP, maxP, minS, maxS);
-		return concreteMap;
+		return concreteMap; 
 	}
 
 	
