@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-
+//VALIDATION
 public class TestFormulasElements {
 
 	public static void testCompound () {
@@ -26,28 +26,29 @@ public class TestFormulasElements {
 		ResultSet id_compound_elements = null;
 		Set <String> FormulasToTest = new TreeSet();
 		
-		// select de la BBDD de los compound_ids que tengan esa formula
+		// select from the database the compound_ids that have this formula
 		try {
 			cn = conexion.conect();
 			stm_compounds = cn.createStatement();
 			stm_compound_elements = cn.createStatement();
-			// obtengo una lista de formulas
+
 			//infoFormulas= stm.executeQuery("SELECT formula FROM compounds WHERE formula = '(C3H6NS2)3.Fe'");
 			//while (infoFormulas.next()) {
 				//tryingFormulas.add(infoFormulas.getString("formula"));
+			
 				FormulasToTest.add("(C3H6NS2)3.Fe");
 				FormulasToTest.add("C39H65NO14");
-				
-				Filter.discardformulas(FormulasToTest); // Filtrar formulas y coger solo validas
-				// Set formulas (PUEDE VENIR DE UNA QUERY O FIJADO POR TI)
-				for (String formula : FormulasToTest)// meter en un bucle for para cada formula
+				//not to have too many lines of code, I have only leaved 2 although I have tried it with more.
+				Filter.discardformulas(FormulasToTest); // Filter formulas and take only valid ones
+
+				for (String formula : FormulasToTest) // put in a for loop for each formula
 				{
 					Boolean correct = true;
 					String sqlQuery = "SELECT compound_id FROM compounds WHERE formula = \"" + formula + "\" order by compound_id";
 					id_compounds = stm_compounds.executeQuery(sqlQuery); 
-					// get IDS from formula para cada formula (COMPOUNDS)
+					// get IDS from formula for each formula (COMPOUNDS)
 					id_compound_elements = stm_compound_elements.executeQuery("SELECT compound_id FROM compound_elements WHERE formula = \"" + formula + "\" order by compound_id"); 
-					// get IDS from formula para cada formula (COMPOUND_ELEMENTS)
+					// get IDS from formula for each formula (COMPOUND_ELEMENTS)
 					
 					while(id_compounds.next()) {
 						if(id_compound_elements.next())
@@ -69,7 +70,7 @@ public class TestFormulasElements {
 					}
 					if(id_compound_elements.next())
 					{
-						// si hay mas resultados en el segundo iterador, el tamaño no es el mismo.
+						// if there are more results in the second iterator, the size is not the same.
 						correct = false;
 					}
 					
@@ -85,7 +86,7 @@ public class TestFormulasElements {
 			}catch (SQLException e) {
 				e.printStackTrace();
 
-			}finally { //cerramos todo
+			}finally { //close everything
 				try {
 					if (infoFormulas!=null) {
 						infoFormulas.close();
@@ -151,7 +152,8 @@ public class TestFormulasElements {
 			String eachFormula = "";
 			int C=0, N=0, Cl=0, O=0, H=0, P=0, S=0;
 			int expectedC =0, expectedN =0, expectedCl =0, expectedO =0, expectedH =0, expectedP =0, expectedS =0; 
-			int id_introduced = 153713; //153718;
+			int id_introduced = 153713; //153718; 
+			//not to have too many lines of code, I have only leaved 2 although I have tried it with more.
 
 			infoFormulas= stm.executeQuery("SELECT C,N,Cl,O,H,P,S,formula FROM compound_elements WHERE compound_id= " + id_introduced );
 			while(infoFormulas.next())

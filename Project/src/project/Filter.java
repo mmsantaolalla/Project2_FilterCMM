@@ -23,19 +23,20 @@ public class Filter {
 	private static Set rightFormulas = new TreeSet();
 	private static Set wrongFormulas = new TreeSet();
 
-	private static String regExpToDiscardRFormulas = "([)]+[a-z]|[a-z]+[a-z]|[R][^a-z]?[1-9]?[0-9]*)";//No R or mon... takes out this wrong formulas
+	private static String regExpToDiscardRFormulas = "([)]+[a-z]|[a-z]+[a-z]|[R][^a-z]?[1-9]?[0-9]*)";
+	//No R or mon... takes out this wrong formulas
 	private String regExpToGetSubformulasWithElement;//subformulas
-	//private static String regExpGetNumberAfterParenthesis = "[)][1-9]?[0-9]*"; //know the subformulas multiplyier numbers
+	
 	private String regexpGetElementsComponentInSimpleFormula;
-	//private static String regExpEliminateParenthesis = "([^0-9]+)";
-	//private static String regExpGetAllNumbers = "([1-9]+)";
+	
 
 	Map<String, Integer> FormulaMap = new HashMap<String, Integer>();
 
 	public Filter(String componente) {
 		this.componente = componente;
 		this.regExpToGetSubformulasWithElement = "([(](.*)" + componente + "(.*)[)]+[1-9]?[0-9]*)";//subformulas
-		this.regexpGetElementsComponentInSimpleFormula = "(" + componente + "[1-9][0-9]*|" + componente + "[^a-z])|" + componente + "\\Z"; //select the component (to add)
+		this.regexpGetElementsComponentInSimpleFormula = "(" + componente + "[1-9][0-9]*|" + componente + "[^a-z])|" + componente + "\\Z"; 
+		//select the component (to add)
 	}
 
 	private int getNumberElementsInFormula(String formulaToGetElements) {
@@ -189,9 +190,9 @@ public class Filter {
 			}
 		}
 	}
-
-	//main used to check while implementing these functions
-	/* public static void main(String[] args) {
+	
+	//independent main to try the filter without the database connection
+	/* public static void main(String[] args) { //main used to check while implementing these functions
 
     	Set<String> formulasToTest = new TreeSet();
         formulasToTest.add("C12H3");

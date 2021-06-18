@@ -24,7 +24,7 @@ public class Main {
 			}
 			if(responseSearch.equalsIgnoreCase("YES")) {
 				Collection<Compound_pojo> implementedMap = new TreeSet<Compound_pojo>();
-				implementedMap = User.search();
+				implementedMap = User.search(); //goes to the User function to start the searching
 				if(implementedMap.isEmpty())
 				{
 					System.out.println("Formula not found for those characteristics");

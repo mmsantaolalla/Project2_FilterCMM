@@ -2,8 +2,8 @@ package project;
 
 
 public class Compound_pojo implements Comparable<Compound_pojo>{
-		// mi entidad compound es un POJO con 4 atributos (ver tipo) con getters (no hacen 
-		// falta setters. SI HACE FALTA toString y Equals (identidad es el compound_id).
+		// my compound entity is a POJO with 4 attributes with getters (no setters needed).
+		// must have toString and Equals (identity is the compound_id).
 		//compound_id, formula, mass, name
 	private Integer compound_id;
 
@@ -68,7 +68,7 @@ public class Compound_pojo implements Comparable<Compound_pojo>{
 		this.mass = mass;
 	}
 
-	@Override
+	@Override // needed Comparable<Compound> and the method compareTo() because of the collection.
 	public int compareTo(Compound_pojo o) {
 		return this.compound_id.compareTo(o.compound_id);
 	}
