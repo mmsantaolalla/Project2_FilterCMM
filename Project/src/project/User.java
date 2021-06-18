@@ -16,7 +16,11 @@ public class User {
 	public static Collection<Compound_pojo> search() throws IOException {	
 		int minvalue =0,maxvalue=0;
 		Collection<Compound_pojo> concreteMap = new TreeSet<Compound_pojo>();
-		int minC=0, maxC=0, minN=0, maxN=0, minCl=0, maxCl=0, minO=0, maxO=0, minH=0, maxH=0, minP=0, maxP=0, minS=0, maxS=0;
+		int minmass=0, maxmass=0, minC=0, maxC=0, minN=0, maxN=0, minCl=0, maxCl=0, minO=0, maxO=0, minH=0, maxH=0, minP=0, maxP=0, minS=0, maxS=0;
+		System.out.println("Introduce the minimum value of searching range for mass:");
+		minmass= Integer.parseInt(reader.readLine());
+		System.out.println("Introduce the maximum value of searching range for mass:");
+		maxmass= Integer.parseInt(reader.readLine());
 		String searchingElements []= {"Carbons", "Nitrogens", "Chlorines", "Oxygens", "Hydrogens", "Phosphorus", "Sulfurs"};
 		for (int i =0; i<searchingElements.length; i++)
 		{
@@ -71,7 +75,7 @@ public class User {
 			}
 		}
 			
-		concreteMap = UserSearching.searchingElement(minC, maxC, minN, maxN, minCl, maxCl, minO, maxO, minH, maxH, minP, maxP, minS, maxS);
+		concreteMap = UserSearching.searchingElement(minmass, maxmass, minC, maxC, minN, maxN, minCl, maxCl, minO, maxO, minH, maxH, minP, maxP, minS, maxS);
 		return concreteMap;
 	}
 

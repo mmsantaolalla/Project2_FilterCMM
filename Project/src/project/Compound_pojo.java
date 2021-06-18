@@ -70,17 +70,7 @@ public class Compound_pojo implements Comparable<Compound_pojo>{
 
 	@Override
 	public int compareTo(Compound_pojo o) {
-		// TODO Auto-generated method stub
-		
-		if(this.compound_id>o.compound_id) {
-			return 1;
-		}
-		else if(this.compound_id==o.compound_id) {
-			return 0;
-		}
-		else {
-			return -1;
-		}
+		return this.compound_id.compareTo(o.compound_id);
 	}
 
 

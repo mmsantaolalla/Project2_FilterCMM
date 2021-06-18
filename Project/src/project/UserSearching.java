@@ -23,8 +23,8 @@ public class UserSearching {
 	 */
 	// you can add the mass as a filter too. It is up to you. You need to find some testing element to show in presentation
 	
-	public static Collection<Compound_pojo> searchingElement(int Cmin, int Cmax, int Nmin, int Nmax, 
-			int Clmin, int Clmax, int Omin, int Omax, int Hmin, int Hmax, int Pmin, int Pmax, int Smin, int Smax){
+	public static Collection<Compound_pojo> searchingElement(int massmin, int massmax, int Cmin, int Cmax, int Nmin, int Nmax, 
+		int Clmin, int Clmax, int Omin, int Omax, int Hmin, int Hmax, int Pmin, int Pmax, int Smin, int Smax){
 		Set<Compound_pojo> compoundSet = new TreeSet<Compound_pojo>();
 		Conexion conexion = new Conexion(); 
 		Connection cn= null;
@@ -34,9 +34,9 @@ public class UserSearching {
 		try {
 			cn = conexion.conect();
 			stm = cn.createStatement();
-			infoFormulas= stm.executeQuery("SELECT ce.compound_id, compound_name, formula, mass FROM compound_elements ce inner join compounds c "
+			infoFormulas= stm.executeQuery("SELECT ce.compound_id, compound_name, c.formula, mass FROM compound_elements ce inner join compounds c "
 					+ "on c.compound_id=ce.compound_id"
-					+ " WHERE (C BETWEEN " + Cmin+ " AND " + Cmax+ ") AND (N BETWEEN " +Nmin+ " AND " + Nmax+ ") "
+					+ " WHERE (mass BETWEEN " +massmin+ " AND " +massmax+ ") AND (C BETWEEN " + Cmin+ " AND " + Cmax+ ") AND (N BETWEEN " +Nmin+ " AND " + Nmax+ ") "
 							+ "AND (Cl BETWEEN " +Clmin+ " AND " +Clmax+ ") AND (O BETWEEN " +Omin+ " AND " +Omax+ ") "
 									+ "AND (H BETWEEN " +Hmin+ " AND " +Hmax+ ") "
 											+ "AND (P BETWEEN " +Pmin+ " AND " +Pmax+ ") "
@@ -47,7 +47,7 @@ public class UserSearching {
 				String formula = infoFormulas.getString("formula"); //como lo hago si enseña la formula, pero en mi tabla no la hay
 				int compound_id = infoFormulas.getInt("compound_id");
 				double mass = infoFormulas.getDouble("mass");
-				String name = infoFormulas.getString("name");
+				String name = infoFormulas.getString("compound_name");
 				
 				// get mass and name
 				// create a new compound
@@ -86,12 +86,64 @@ public class UserSearching {
 		return compoundSet;
 	}
 	
-	/*public static void main(String[] args) { //main used to check this class while implementing it
-		Map<String, Set<Integer>> myMap = UserSerching.searchingElement(2, 9, 1, 1, 0, 0, 0, 10, 0, 10, 0, 10, 0, 1);
-		for (String formula: myMap.keySet())
-		{
-			System.out.println(formula);
-			System.out.println(myMap.get(formula));	
+	public static Collection <Compound_pojo> searchingMass (int massmin, int massmax){
+		Set<Compound_pojo> compoundSet = new TreeSet<Compound_pojo>();
+		Conexion conexion = new Conexion(); 
+		Connection cn= null;
+		Statement stm = null;
+		ResultSet infoFormulas = null;
+		try {
+			cn = conexion.conect();
+			stm = cn.createStatement();
+			infoFormulas= stm.executeQuery("SELECT ce.compound_id, compound_name, c.formula, mass FROM compound_elements ce inner join compounds c "
+					+ "on c.compound_id=ce.compound_id"
+					+ " WHERE (mass BETWEEN " +massmin+ " AND " +massmax+ ")");
+			while(infoFormulas.next())
+			{
+				String formula = infoFormulas.getString("formula"); //como lo hago si enseña la formula, pero en mi tabla no la hay
+				int compound_id = infoFormulas.getInt("compound_id");
+				double mass = infoFormulas.getDouble("mass");
+				String name = infoFormulas.getString("compound_name");
+
+				Compound_pojo c = new Compound_pojo(compound_id, formula, mass, name);
+				compoundSet.add(c);
+			}
+				
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}finally { //close connections
+			try {
+				if (infoFormulas!=null) {
+					infoFormulas.close();
+				} 
+				if(stm!=null) {
+					stm.close();
+				}
+				if(cn!=null) {
+					cn.close();
+				}
+
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
+		return compoundSet;
+		
+	}
+	/*
+	public static void main(String[] args) { //main used to check this class while implementing it
+		//Collection<Compound_pojo> mySet = UserSearching.searchingElement(100, 500, 2, 9, 1, 1, 0, 0, 0, 10, 0, 10, 0, 10, 0, 1);//100, 500, 2, 9, 1, 1, no, no, no, P=  0, 10, S= 0,10
+		Collection <Compound_pojo> myMassSet = searchingMass (100,500); 
+		for (Compound_pojo compound: myMassSet)
+		{
+			System.out.println(compound);
+		}
+		
+		
 	}*/
 }
